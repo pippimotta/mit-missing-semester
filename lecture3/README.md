@@ -19,6 +19,18 @@ Exercises for [lecture3](https://missing.csail.mit.edu/2020/editors/)
 
 5. (Advanced) Convert XML to JSON ([example file](https://missing.csail.mit.edu/2020/files/example-data.xml)) using Vim macros. Try to do this on your own, but you can look at the macros section above if you get stuck.
 
+   1. using `sed/regexes` to do replacement
+
+   - `g/people/d`: delete all lines in the file that contain the word `people`
+   - `%s/<person>/{/g`: subsitute all lines that contain the word `<person>`
+   - `%s/<\/person>/}/g`: as above
+   - `%s/<name>\(.*\)<\/name>/"name": "\1",/g`: search for all occurrences of the pattern <name>.\*</name> on all lines, replacing with `name:`, `\1` is the reference to the captured text from the first capturing group
+   - `%s/<email>\(.*\)<\/email>/"email": "\1",/g`
+
+   2.(option)vim & marco commands
+
+   - check the [notes](https://missing.csail.mit.edu/2020/editors/#macros:~:text=Vim%20commands%20/%20macros)
+
 ## Take out
 
 1. using visual mode to copy and paste
