@@ -27,7 +27,7 @@ Exercises for [lecture3](https://missing.csail.mit.edu/2020/editors/)
    - `%s/<name>\(.*\)<\/name>/"name": "\1",/g`: search for all occurrences of the pattern <name>.\*</name> on all lines, replacing with `name:`, `\1` is the reference to the captured text from the first capturing group
    - `%s/<email>\(.*\)<\/email>/"email": "\1",/g`
 
-   2.(option)vim & marco commands
+     2.(option)vim & marco commands
 
    - check the [notes](https://missing.csail.mit.edu/2020/editors/#macros:~:text=Vim%20commands%20/%20macros)
 
