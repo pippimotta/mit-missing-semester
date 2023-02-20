@@ -69,6 +69,39 @@ diff --changed-group-format='<' all_letters last_letters | grep '<'|sed -E 's/(.
 
 3. To do in-place substitution it is quite tempting to do something like `sed s/REGEX/SUBSTITUTION/ input.txt > input.txt`. However this is a bad idea, why? Is this particular to sed? Use man sed to find out how to accomplish this.
 
-- This is a bad idea because the shell redirection operator `>` truncates the output file input.txt before sed starts processing the input file, which means that the original contents of input.txt will be lost before sed has a chance to read them. As a result, the output file will be empty or contain only the text produced by the sed command.
+- This is a bad idea because the shell redirection operator `>` truncates the output file `input.txt` before sed starts processing the input file, which means that the original contents of input.txt will be lost before sed has a chance to read them. As a result, the output file will be empty or contain only the text produced by the sed command.
 
 - To perform an in-place substitution with sed, you should use the `-i` flag followed by an optional backup extension, like `sed -i.bak 's/REGEX/SUBSTITUTION/' input.txt`, which will modify `input.txt` in place and create a backup copy with the specified extension.
+
+4. Find your `average`, `median`, and `max` system boot time over the last ten boots. Use `journalctl` on Linux and `log show` on macOS, and look for log timestamps near the beginning and end of each boot. On Linux, they may look something like:
+
+```
+Logs begin at ...
+```
+
+and
+
+```
+systemd[577]: Startup finished in ...
+```
+
+On macOS, look for:
+
+```
+=== system boot:
+```
+
+and
+
+```
+Previous shutdown cause: 5
+```
+
+To get the boot message containting the require message:
+
+```
+log show | grep -E '=== system boot:| Previous shutdown cause: 5' > bootmsg
+```
+
+One example piece of message will look like:
+`2:2023-02-09 02:58:47.409973-0800 0x0        Timesync    0x0                  0      0    === system boot: 39CA2A6B-6C61-4D23-9666-738BEDF1FC44`
