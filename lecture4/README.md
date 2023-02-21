@@ -4,30 +4,30 @@ Exercises for [lecture4](https://missing.csail.mit.edu/2020/data-wrangling/)
 
 1. Take this short interactive [regex tutorial](https://regexone.com/).
 
-2. 1. Find the number of words (in `/usr/share/dict/words`) that contain at least three `a`s and don’t have a `'s` ending.
+2. - Find the number of words (in `/usr/share/dict/words`) that contain at least three `a`s and don’t have a `'s` ending.
 
 ```
 cat /usr/share/dict/words | tr "[:upper:]" "[:lower:]" | grep -E "^([^a]*a){3,}.*$" | grep -v "\'s$" |wc -l
 ```
 
-    - `tr "[:upper:] "[:lower:]"]` is used to make case insensitivity
-    - `grep -v` is used to select the part of "not matching"
+      - `tr "[:upper:] "[:lower:]"]` is used to make case insensitivity
+      - `grep -v` is used to select the part of "not matching"
 
-2. 2. What are the three most common last two letters of those words? `sed`’s `y` command, or the `tr` program, may help you with case insensitivity.
+2. - What are the three most common last two letters of those words? `sed`’s `y` command, or the `tr` program, may help you with case insensitivity.
 
 ```
 cat /usr/share/dict/words | tr "[:upper:]" "[:lower:]" | grep -E "^([^a]*a){3,}.*$" | grep -v "\'s$" | sed -E "s/.*([a-z]{2})$/\1/" | sort | uniq -c |sort -n |tail -n3
 ```
 
-    - `sed -E "s/.*([a-z]{2}$/\1)/"` is used to substitute all found matches with the first capture group(the last two letters).
+- `sed -E "s/.*([a-z]{2}$/\1)/"` is used to substitute all found matches with the first capture group(the last two letters).
 
-2. 3. How many of those two-letter combinations are there?
+2. - How many of those two-letter combinations are there?
 
 ```
 cat /usr/share/dict/words | tr "[:upper:]" "[:lower:]" | grep -E "^([^a]*a){3,}.*$" | grep -v "\'s$" | sed -E "s/.*([a-z]{2})$/\1/" | sort | uniq | wc -l
 ```
 
-2. 4. And for a challenge: which combinations do not occur?
+2. - And for a challenge: which combinations do not occur?
 
 - output all last two letters to `last_letters`:
 
@@ -69,9 +69,9 @@ diff --changed-group-format='<' all_letters last_letters | grep '<'|sed -E 's/(.
 
 3. To do in-place substitution it is quite tempting to do something like `sed s/REGEX/SUBSTITUTION/ input.txt > input.txt`. However this is a bad idea, why? Is this particular to sed? Use man sed to find out how to accomplish this.
 
-- This is a bad idea because the shell redirection operator `>` truncates the output file `input.txt` before sed starts processing the input file, which means that the original contents of input.txt will be lost before sed has a chance to read them. As a result, the output file will be empty or contain only the text produced by the sed command.
+   - This is a bad idea because the shell redirection operator `>` truncates the output file `input.txt` before sed starts processing the input file, which means that the original contents of input.txt will be lost before sed has a chance to read them. As a result, the output file will be empty or contain only the text produced by the sed command.
 
-- To perform an in-place substitution with sed, you should use the `-i` flag followed by an optional backup extension, like `sed -i.bak 's/REGEX/SUBSTITUTION/' input.txt`, which will modify `input.txt` in place and create a backup copy with the specified extension.
+   - To perform an in-place substitution with sed, you should use the `-i` flag followed by an optional backup extension, like `sed -i.bak 's/REGEX/SUBSTITUTION/' input.txt`, which will modify `input.txt` in place and create a backup copy with the specified extension.
 
 4. Find your `average`, `median`, and `max` system boot time over the last ten boots. Use `journalctl` on Linux and `log show` on macOS, and look for log timestamps near the beginning and end of each boot. On Linux, they may look something like:
 
@@ -104,4 +104,20 @@ log show | grep -E '=== system boot:| Previous shutdown cause: 5' > bootmsg
 ```
 
 One example piece of message will look like:
-`2:2023-02-09 02:58:47.409973-0800 0x0        Timesync    0x0                  0      0    === system boot: 39CA2A6B-6C61-4D23-9666-738BEDF1FC44`
+
+```
+2:2023-02-09 02:58:47.409973-0800 0x0        Timesync    0x0                  0      0    === system boot: 39CA2A6B-6C61-4D23-9666-738BEDF1FC44`
+```
+
+Getting `max`, `min` and `median`, we can either use `R` or `st`
+(since I had nightmare with `R`, I am going to use `st`)
+
+```
+brew install st
+```
+
+```
+cat bootmsg |awk 'print $2'|sed -E "s/^.*:(.*)/\1/"|sort
+```
+
+stuck cuz i seem don't have enough logs (^^)
