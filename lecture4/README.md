@@ -120,4 +120,4 @@ brew install st
 cat bootmsg |awk 'print $2'|sed -E "s/^.*:(.*)/\1/"|sort
 ```
 
-stuck cuz i seem don't have enough logs (^^)
+stuck cuz it seems that I don't have enough logs (^^)
