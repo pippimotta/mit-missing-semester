@@ -121,3 +121,17 @@ cat bootmsg |awk 'print $2'|sed -E "s/^.*:(.*)/\1/"|sort
 ```
 
 stuck cuz it seems that I don't have enough logs (^^)
+
+5. Find an online data set like [this one](https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm), [this one](https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/topic-pages/tables/table-1). or maybe [one from here](https://www.springboard.com/blog/free-public-data-sets-data-science-project/). Fetch it using `curl` and extract out just two columns of numerical data. If you're fetching HTML data, `pup` might be helpful. For JSON data, try `jq`. Find the min and max of one column in a single command, and the sum of the difference between the two columns in another.
+
+- using `pup` to get the first 2 columns of the table
+
+```
+curl https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm | pup 'table tr td:nth-child(-n+2) text{}'
+```
+
+- to get the 4th column
+
+```
+curl https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm | pup 'table tr td:nth-child(4) text{}'
+```
