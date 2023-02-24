@@ -135,3 +135,8 @@ curl https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm | pup 'table tr td:nth
 ```
 curl https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm | pup 'table tr td:nth-child(4) text{}'
 ```
+
+## Appendix: Useful tutorial of `awk`
+
+1. [8 Powerful Awk Built-in Variables – FS, OFS, RS, ORS, NR, NF, FILENAME, FNR](https://www.thegeekstuff.com/2010/01/8-powerful-awk-built-in-variables-fs-ofs-rs-ors-nr-nf-filename-fnr/)
+2. [Learning Awk Is Essential For Linux Users](https://www.youtube.com/watch?v=9YOZmI-zWok)
